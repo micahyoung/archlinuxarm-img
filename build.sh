@@ -5,7 +5,7 @@ set -ex
 outdir=$1
 size_mbytes=${2:-2000} #2GB default
 tmpdir=tmp/
-latest_url=http://archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
+latest_url=https://archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
 sector_bytes=512
 mbr_sectors=2048
 boot_start_sectors=2048
@@ -31,7 +31,7 @@ if [ ! -d "$tmpdir" ]; then
 fi
 
 pushd $tmpdir/
-	wget --timestamping $latest_url -O alarpmi.tgz
+	curl -L $latest_url > alarpmi.tgz
 
 	dd if=/dev/zero of=mbr.img  bs=$sector_bytes count=$mbr_sectors
 	dd if=/dev/zero of=boot.img bs=$sector_bytes count=$boot_sectors
